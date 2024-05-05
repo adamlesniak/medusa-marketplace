@@ -1,16 +1,16 @@
 import { Column, Entity, Index, JoinColumn, ManyToOne } from "typeorm"
 import {
-  Order as MedusaOrder,
+  GiftCard as MedusaGiftCard,
 } from "@medusajs/medusa"
 import { Store } from "./store";
 
 @Entity()
-export class Order extends MedusaOrder {
-  @Index("OrderStoreId")
+export class GiftCard extends MedusaGiftCard {
+  @Index("GiftCardStoreId")
   @Column({ nullable: true })
   store_id?: string;
 
-  @ManyToOne(() => Store, (store) => store.orders)
+  @ManyToOne(() => Store, (store) => store.giftCards)
   @JoinColumn({ name: 'store_id', referencedColumnName: 'id' })
   store?: Store;
 }

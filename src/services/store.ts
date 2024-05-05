@@ -1,19 +1,21 @@
-import { Lifetime } from "awilix"
-import { 
+import { Lifetime } from "awilix";
+import {
   FindConfig,
-  StoreService as MedusaStoreService, Store, User,
-} from "@medusajs/medusa"
+  StoreService as MedusaStoreService,
+  Store,
+  User,
+} from "@medusajs/medusa";
 
 class StoreService extends MedusaStoreService {
-  static LIFE_TIME = Lifetime.SCOPED
-  protected readonly loggedInUser_: User | null
+  static LIFE_TIME = Lifetime.SCOPED;
+  protected readonly loggedInUser_: User | null;
 
   constructor(container, options) {
     // @ts-expect-error prefer-rest-params
-    super(...arguments)
+    super(...arguments);
 
     try {
-      this.loggedInUser_ = container.loggedInUser
+      this.loggedInUser_ = container.loggedInUser;
     } catch (e) {
       // avoid errors when backend first runs
     }
@@ -27,25 +29,22 @@ class StoreService extends MedusaStoreService {
     return this.retrieveForLoggedInUser(config);
   }
 
-  async retrieveForLoggedInUser (config?: FindConfig<Store>) {
+  async retrieveForLoggedInUser(config?: FindConfig<Store>) {
     const storeRepo = this.manager_.withRepository(this.storeRepository_);
     const store = await storeRepo.findOne({
-        ...config,
-        relations: [
-          ...config.relations,
-          'members'
-        ],
-        where: {
-          id: this.loggedInUser_.store_id
-        },
+      ...config,
+      relations: [...config.relations],
+      where: {
+        id: this.loggedInUser_.store_id,
+      },
     });
 
     if (!store) {
-        throw new Error('Unable to find the user store');
+      throw new Error("Unable to find the user store");
     }
 
-    return store
+    return store;
   }
 }
 
-export default StoreService
+export default StoreService;

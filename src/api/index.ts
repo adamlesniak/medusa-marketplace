@@ -6,7 +6,7 @@ import {
 import 
   authenticate 
 from "@medusajs/medusa/dist/api/middlewares/authenticate"
-import * as cors from "cors"
+import cors from "cors"
 
 export default function (rootDirectory: string) {
   const router = Router()

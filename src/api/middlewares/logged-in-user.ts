@@ -1,5 +1,4 @@
-import { UserService } from "@medusajs/medusa"
-import { User } from "../../models/user"
+import { UserService, User } from "@medusajs/medusa"
 
 export async function registerLoggedInUser(req, res, next) {
   let loggedInUser: User | null = null
